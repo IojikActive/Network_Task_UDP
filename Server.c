@@ -12,7 +12,6 @@
 
 
 int main (int argc,char* argv[]){
-	printf("f \n");
 
     char* net = argv[1];
     char* port = argv[2];

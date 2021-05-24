@@ -9,19 +9,15 @@
 
 
 
-int main (){
+int main (int argc,char** argv){
 
-	//char* net = argv[1];
-	//char* port = argv[2];
+	char* net = argv[1];
+	char* port = argv[2];
 
 	char message[] = "Client lookup!";
 
-	//struct sockaddr *sa,*ca; // sa - serveraddr, ca - clientaddr
 	struct sockaddr_in caddr;
-	struct sockaddr *ca;
 
-	//sa = &saddr;
-	ca = &caddr;
 	
 	int s = socket(AF_INET,SOCK_DGRAM,0);//создаём сокет
 	if(s<0){
@@ -32,10 +28,10 @@ int main (){
 
 
 	caddr.sin_family=AF_INET;
-	caddr.sin_addr.s_addr = htons("127.0.0.1"); // INADDR_ANY для подключения к любому ип адресу?
-	caddr.sin_port = htonl("49154");
+	caddr.sin_addr.s_addr = htons("127.0.0.1"); // INADDR_ANY для подключения к любому ип адресу. Использовать на сервере.
+	caddr.sin_port = htonl(argv[2]);
 
-	sendto(s,message,sizeof(message),0,(struct sockaddr *)ca, sizeof(ca));
+	sendto(s,message,sizeof(message),0,(struct sockaddr *) &caddr, sizeof(ca));
 
 	connect (s,(struct sockaddr *) &caddr,sizeof(caddr));
 
