@@ -1,11 +1,5 @@
 //https://www.opennet.ru/docs/RUS/socket/socket.html
-
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <stdio.h>
-
-//#include "client-server.h"
+#include "client-server.h"
 
 
 
