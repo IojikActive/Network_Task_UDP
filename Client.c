@@ -31,7 +31,7 @@ int main (int argc,char** argv){
 	caddr.sin_addr.s_addr = htons("127.0.0.1"); // INADDR_ANY для подключения к любому ип адресу. Использовать на сервере.
 	caddr.sin_port = htonl(argv[2]);
 
-	sendto(s,message,sizeof(message),0,(struct sockaddr *) &caddr, sizeof(ca));
+	sendto(s,message,sizeof(message),0,(struct sockaddr *) &caddr, sizeof(caddr));
 
 	connect (s,(struct sockaddr *) &caddr,sizeof(caddr));
 
