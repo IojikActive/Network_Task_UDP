@@ -6,7 +6,7 @@
 int main (int argc,char** argv){
 
 	char* net = argv[1];
-	char* port = argv[2];
+	char* port = argv[1];
 
 	char message[] = "Client lookup!";
 
@@ -22,8 +22,10 @@ int main (int argc,char** argv){
 
 
 	caddr.sin_family=AF_INET;
-	caddr.sin_addr.s_addr = htons("127.0.0.1"); // INADDR_ANY для подключения к любому ип адресу. Использовать на сервере.
-	caddr.sin_port = htonl(argv[2]);
+	caddr.sin_addr.s_addr = htonl(INADDR_LOOPBACK); //htons("127.0.0.1"); // INADDR_ANY для подключения к любому ип адресу. Использовать на сервере.
+	caddr.sin_port = (int) argv[1];
+
+	printf("%i \n",caddr.sin_port);
 
 	sendto(s,message,sizeof(message),0,(struct sockaddr *) &caddr, sizeof(caddr));
 

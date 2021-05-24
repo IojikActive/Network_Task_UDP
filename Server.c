@@ -4,10 +4,10 @@
 
 int main (int argc,char** argv){
 
-    if(argc == 3) {
+    if(argc == 2) {
         
         char* net = argv[1];
-        char* port = argv[2];
+        char* port = argv[1];
 
         struct sockaddr_in saddr;
 
@@ -24,10 +24,10 @@ int main (int argc,char** argv){
         printf("Socket ok\n");
         
         saddr.sin_family = AF_INET;
-        saddr.sin_addr.s_addr = inet_addr(argv[1]);
-        saddr.sin_port = 0;//htons(port); // htons
+        saddr.sin_addr.s_addr = htonl(INADDR_ANY);
+        saddr.sin_port = argv[1]; // htons
 
-        printf(saddr.sin_port);
+        printf("%i \n",saddr.sin_port);
 
         printf("DEBUG: BEFORE bind\n");
         if(bind(s, (struct sockaddr *) &saddr, sizeof(saddr)) < 0){
@@ -45,17 +45,18 @@ int main (int argc,char** argv){
 
         printf("DEBUG: BEFORE WHILE\n");
 
-        while(1){
+        while(num < 10){
             bytes_read = recvfrom(s,buf,1024,0,NULL,NULL);
             buf [bytes_read] ='\0';
-            printf(buf,'\n');
+            printf("%s ,\n",buf);
             printf("wait...\n");
             num++;
         }
 
         close(s);
         shutdown(s,2);
-        printf("close");
+        printf("close\n");
+        printf("%i",num);
 
     return 0;
     }else {
