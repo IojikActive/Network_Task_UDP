@@ -3,11 +3,11 @@
 
 
 
+
 int main (int argc,char* argv[]){
 
-	//char* port = argv[1];
 
-	char message[] = "Its me bro!";
+	char message[] = "CLIENT: lookup";
 
 	struct sockaddr_in caddr;
 
@@ -20,14 +20,26 @@ int main (int argc,char* argv[]){
 	}
 
 	caddr.sin_family=AF_INET;
-	caddr.sin_addr.s_addr = INADDR_ANY; //htons("127.0.0.1"); // INADDR_ANY для подключения к любому ип адресу. Использовать на сервере.
+	caddr.sin_addr.s_addr = INADDR_ANY;//INADDR_ANY
 	caddr.sin_port = atoi(argv[1]);
 
-	printf("%i \n",caddr.sin_port);
+	
+	//printf("%s \n", inet_ntoa(caddr.sin_addr));
+	printf("IP Client: %i.%i.%i.%i \n",
+	((int)caddr.sin_addr.s_addr/16777216)%256,
+	((int)caddr.sin_addr.s_addr/65536)%256,
+	((int)caddr.sin_addr.s_addr/256)%256,
+	((int)caddr.sin_addr.s_addr%256));
+	printf("port%i \n",caddr.sin_port);
 
 	sendto(s,message,sizeof(message),0,(struct sockaddr *) &caddr, sizeof(caddr)); 
 
-	//connect (s,(struct sockaddr *) &caddr,sizeof(caddr));
+	//clock_t clock = clock();
+
+	//while (){
+
+
+	//}
 
 	close(s);
 

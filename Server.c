@@ -1,14 +1,13 @@
 #include "client-server.h"
-//49002 port
 
 
 int main (int argc,char* argv[]){
 
-        //char* port = argv[1];
+
         int port = (int)*argv[1];
         struct sockaddr_in saddr;
 
-        printf("Socket get ready!!\n");
+        //printf("Socket get ready!!\n");
 
         int s = socket(AF_INET,SOCK_DGRAM,0);
         if(s<0){
@@ -16,17 +15,23 @@ int main (int argc,char* argv[]){
             printf("Bad socket,exit \n");
             exit(1);
         }
-        printf("Socket is ok\n");
+        //printf("Socket is ok\n");
 
         saddr.sin_family = AF_INET;
         saddr.sin_addr.s_addr = INADDR_ANY;
         saddr.sin_port = atoi(argv[1]); // htons 
 
-        printf("IP: %s \n",saddr.sin_addr.s_addr);
-        printf("Port: %i \n",saddr.sin_port);
+    
+        
+        printf("IP Server: %i.%i.%i.%i \n",
+	((int)saddr.sin_addr.s_addr/16777216)%256,
+	((int)saddr.sin_addr.s_addr/65536)%256,
+	((int)saddr.sin_addr.s_addr/256)%256,
+	((int)saddr.sin_addr.s_addr%256));
+    printf("Port: %i \n",saddr.sin_port);
 
 
-        printf("DEBUG: BEFORE bind\n");
+      //  printf("DEBUG: BEFORE bind\n");
         if(bind(s, (struct sockaddr *) &saddr, sizeof(saddr)) < 0){
             perror("Wrong bind");
             printf("Bad bind,exit");
@@ -40,14 +45,17 @@ int main (int argc,char* argv[]){
         int num=0;
 
 
-        printf("DEBUG: BEFORE WHILE\n");
+        printf("Waiting message\n");
 
         while(1){
             bytes_read = recvfrom(s,buf,1024,0,NULL,NULL);
             buf [bytes_read] ='\0';
             printf("%s \n",buf);
-            printf("wait...\n");
-            //num++;
+            
+            //if(buf != NULL){
+                
+
+            //}
         }
 
         close(s);
