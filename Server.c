@@ -24,10 +24,10 @@ int main (int argc,char* argv[]){
     
         
         printf("IP Server: %i.%i.%i.%i \n",
-	((int)saddr.sin_addr.s_addr/16777216)%256,
-	((int)saddr.sin_addr.s_addr/65536)%256,
-	((int)saddr.sin_addr.s_addr/256)%256,
-	((int)saddr.sin_addr.s_addr%256));
+	((uint32_t)saddr.sin_addr.s_addr/16777216)%256,
+	((uint32_t)saddr.sin_addr.s_addr/65536)%256,
+	((uint32_t)saddr.sin_addr.s_addr/256)%256,
+	((uint32_t)saddr.sin_addr.s_addr%256));
     printf("Port: %i \n",saddr.sin_port);
 
 
