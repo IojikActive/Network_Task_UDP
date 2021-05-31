@@ -2,32 +2,29 @@
 //49002 port
 
 
-int main (int argc,char** argv){
+int main (int argc,char* argv[]){
 
-    if(argc == 2) {
-        
-        char* net = argv[1];
-        char* port = argv[1];
-
+        //char* port = argv[1];
+        int port = (int)*argv[1];
         struct sockaddr_in saddr;
-
-    
 
         printf("Socket get ready!!\n");
 
         int s = socket(AF_INET,SOCK_DGRAM,0);
         if(s<0){
-            perror("wrong socket");
-            printf("Bad socket,exit");
+            perror("wrong socket \n");
+            printf("Bad socket,exit \n");
             exit(1);
         }
-        printf("Socket ok\n");
-        
-        saddr.sin_family = AF_INET;
-        saddr.sin_addr.s_addr = htonl(INADDR_ANY);
-        saddr.sin_port = argv[1]; // htons
+        printf("Socket is ok\n");
 
-        printf("%i \n",saddr.sin_port);
+        saddr.sin_family = AF_INET;
+        saddr.sin_addr.s_addr = INADDR_ANY;
+        saddr.sin_port = atoi(argv[1]); // htons 
+
+        printf("IP: %s \n",saddr.sin_addr.s_addr);
+        printf("Port: %i \n",saddr.sin_port);
+
 
         printf("DEBUG: BEFORE bind\n");
         if(bind(s, (struct sockaddr *) &saddr, sizeof(saddr)) < 0){
@@ -45,12 +42,12 @@ int main (int argc,char** argv){
 
         printf("DEBUG: BEFORE WHILE\n");
 
-        while(num < 10){
+        while(1){
             bytes_read = recvfrom(s,buf,1024,0,NULL,NULL);
             buf [bytes_read] ='\0';
-            printf("%s ,\n",buf);
+            printf("%s \n",buf);
             printf("wait...\n");
-            num++;
+            //num++;
         }
 
         close(s);
@@ -59,12 +56,8 @@ int main (int argc,char** argv){
         printf("%i",num);
 
     return 0;
-    }else {
-        printf("wrong argc\n");
-        exit(-1);
 
-    }
+
 
 
 }
-
